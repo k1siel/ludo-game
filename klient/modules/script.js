@@ -24,6 +24,7 @@ let start = {
             console.log(user.username, user.color)
             player = new Player(user.username, "0", new Date().getTime())
             player.color = user.color
+            player.gameId = user.gameId
             console.log(player)
         }
         else {
@@ -31,13 +32,30 @@ let start = {
             let nickname = prompt("podaj swój nick!")
             player = new Player(nickname, 0, new Date().getTime())
 
-            ajaxFunc.addToGame(player.data)
+            let ob = await ajaxFunc.addToGame(player.data)
+            sessionStorage.setItem("username", ob.username)
+            sessionStorage.setItem("color", ob.color)
+            sessionStorage.setItem("gameId", ob.gameId)
+
+            player.color = ob.color
+            player.gameId = ob.gameId
+
+            console.log(player)
+            
         }
+
+        gameUpdate.interval = setInterval(gameUpdate.update, 3000)
     }
+
+ 
 }
 
 let gameUpdate = {
-
+    interval: "",
+    update: function(){
+        let userData = ajaxFunc.updateGame(player.data)
+        console.log(JSON.stringify(userData))
+    }
 }
 
 

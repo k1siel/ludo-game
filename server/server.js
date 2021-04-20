@@ -139,6 +139,22 @@ app.post("/check", (req, res) => {
 
 })
 
+app.post("/update", (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  console.log(req.body)
+
+  User.find({gameId: req.body.gameId}, function (err, users) {
+    console.log(users)
+    res.end(JSON.stringify(users))
+  })
+  
+
+
+
+
+
+
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

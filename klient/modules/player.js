@@ -6,6 +6,7 @@ export default class Player {
         this.lastActivity = lastActivity
         this.status = status
         this.color = "none"
+        this.gameId = "none"
     }
 
     get data(){
@@ -19,6 +20,7 @@ export default class Player {
             lastActivity: this.lastActivity,
             status: this.status,
             color: this.color,
+            gameId: this.gameId
         }
 
         return ob

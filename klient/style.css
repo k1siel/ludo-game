@@ -1,0 +1,9 @@
+
+
+.player{
+    width: 100px;
+    height: 50px;
+    background-color: #aaaaaa;
+    border: 1px black solid;
+    border-radius: 10px;
+}
