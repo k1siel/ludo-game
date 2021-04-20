@@ -14,9 +14,7 @@ let start = {
     load: function () {
         let nickname = prompt("podaj swój nick!")
         let player = new Player(nickname, 0, new Date().getTime())
-        console.log(player, ajaxFunc)
-
-        console.log(player.data)
+        
         ajaxFunc.addToGame(player.data)
 
     }
