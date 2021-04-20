@@ -39,10 +39,10 @@ let dbFunc = {
         return promise
     },
 
-    getSong(el) {
+    getUser(el) {
         let promise = new Promise((resolve, reject) => {
-            database.findOne({ song: el }, function (err, docs) {
-
+            database.findOne(el, function (err, docs) {
+                console.log(docs)
                 let record = JSON.stringify(docs)
                 resolve(record)
             })

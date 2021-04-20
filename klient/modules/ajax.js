@@ -17,6 +17,31 @@ let ajaxFunc = {
             },
 
         })
+    },
+    comebackToGame: function (sendData) {
+        return $.ajax({
+            url: 'http://localhost:3000/check',
+            type: 'POST',
+            data: sendData,
+            dataType: "json",
+        
+
+        })
+    },
+
+    updateGame: function (sendData) {
+        $.ajax({
+            url: 'http://localhost:3000/update',
+            type: 'POST',
+            data: sendData,
+            dataType: "json",
+            success: function (response) {
+
+                console.log(response)
+                return response
+            },
+
+        })
     }
 
 }
