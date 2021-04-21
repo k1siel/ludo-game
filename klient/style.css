@@ -1,9 +1,52 @@
+/* 
+#164A41 deepgreen
+#4D774E mediumgreen
+#9DC88D palegreen
+#F1024A gold
+#
+*/
 
 
+*{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(241, 217, 163);
+    color: rgb(238, 238, 238)
+}
 .player{
     width: 100px;
     height: 50px;
-    background-color: #aaaaaa;
-    border: 1px black solid;
+    background-color: #ad8835;
+    border: 3px #5a5025 solid;
     border-radius: 10px;
+    margin: 15px;
+  
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.8em;
+    text-align: center;
 }
+
+#content{
+    display: flex;
+    
+}
+
+#players{
+ width: 20%;
+ height: 100%;
+ 
+ border-radius: 20px;
+ padding: 10px;
+ 
+}
+
+#board{
+    padding: 10px;
+    height: 100%;
+}
+
+#actionPanel{
+    height: 100%;
+}
+

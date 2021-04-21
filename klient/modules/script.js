@@ -41,20 +41,21 @@ let start = {
             player.gameId = ob.gameId
 
             console.log(player)
-            
+
         }
 
         gameUpdate.interval = setInterval(gameUpdate.update, 3000)
     }
 
- 
+
 }
 
 let gameUpdate = {
     interval: "",
-    update: function(){
-        let userData = ajaxFunc.updateGame(player.data)
-        console.log(JSON.stringify(userData))
+    update: async function () {
+        let userData = await ajaxFunc.updateGame(player.data)
+        console.log(userData)
+      
     }
 }
 

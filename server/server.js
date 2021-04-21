@@ -6,7 +6,7 @@ const db = require(__dirname + "/database-controler.js")
 app.use(bodyParser.urlencoded({ extended: true }));
 const mongoose = require('mongoose');
 const ludo = require(__dirname + "/ludo-functions.js")
-
+const path = require('path')
 
 const connectionParams = {
   useNewUrlParser: true,
@@ -23,9 +23,7 @@ mongoose.connect('mongodb+srv://ludoGame:zaq1@WSX@ludogame.iy4sg.mongodb.net/lud
 
 
 let lastgame = ""
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../klient', 'index.html'))
-})
+app.use(express.static(path.join(__dirname, "../klient")))
 
 
 let userSchema = new mongoose.Schema({
@@ -66,36 +64,36 @@ app.post("/add", (req, res) => {
   else {
 
     let check = async function () {
-      User.find({gameId: lastgame}, function (err, users) {
+      User.find({ gameId: lastgame }, function (err, users) {
         console.log(users)
-      
+
 
         if (users.length < 4) {
           playerData.gameId = String(lastgame)
           playerData.color = ludo.getRandomColor(users)
-         
+
           let player = new User(playerData)
           player.save(function (err) {
             if (err) return console.error(err);
             else console.log("saved!")
           })
-  
+
           res.end(JSON.stringify(playerData))
           console.log(playerData)
         }
         else {
           lastgame = new Date().getTime()
           playerData.gameId = String(lastgame)
-         
-  
-  
+
+
+
           playerData.color = ludo.getRandomColor("")
           let player = new User(playerData)
           player.save(function (err) {
             if (err) return console.error(err);
             else console.log("saved!")
           })
-  
+
           res.end(JSON.stringify(playerData))
           console.log(playerData)
         }
@@ -104,8 +102,8 @@ app.post("/add", (req, res) => {
 
 
       })
-      
-     
+
+
     }
     check()
 
@@ -125,11 +123,11 @@ app.post("/check", (req, res) => {
   let findUser = async function (data) {
     User.find({ username: req.body.username, gameId: req.body.gameId }, function (err, users) {
       console.log(users)
-       res.end(JSON.stringify(users[0]))
+      res.end(JSON.stringify(users[0]))
     })
-   // let user = await db.getUser(req.body)
-   // res.end(JSON.stringify(user))
-   // console.log(user)
+    // let user = await db.getUser(req.body)
+    // res.end(JSON.stringify(user))
+    // console.log(user)
   }
 
   findUser()
@@ -143,11 +141,11 @@ app.post("/update", (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   console.log(req.body)
 
-  User.find({gameId: req.body.gameId}, function (err, users) {
+  User.find({ gameId: req.body.gameId }, function (err, users) {
     console.log(users)
     res.end(JSON.stringify(users))
   })
-  
+
 
 
 
