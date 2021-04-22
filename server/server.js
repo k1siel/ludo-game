@@ -137,9 +137,13 @@ app.post("/check", (req, res) => {
 
 })
 
-app.post("/update", (req, res) => {
+app.post("/update", async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   console.log(req.body)
+
+  let filter = { gameId: req.body.gameId, username: req.body.username, time: req.body.time }
+  let update = { status: req.body.status, lastActivity: req.body.lastActivity }
+  await User.findOneAndUpdate(filter, update)
 
   User.find({ gameId: req.body.gameId }, function (err, users) {
     console.log(users)

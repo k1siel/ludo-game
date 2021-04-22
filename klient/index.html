@@ -9,6 +9,10 @@
     <script type="module" src="./modules/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -22,14 +26,15 @@
             <div id="player3" class="player">???</div>
             <div id="player4" class="player">???</div>
         </div>
-        <div id="board">
-            <div>
+        <div id="boardContainer">
+            <div id="board"></div>
+            <!-- <div>
                 <img src="./modules/images/plansza.svg" alt="board" id="boardImage" width="650px" height="650px">
-            </div>
+            </div> -->
         </div>
         <div id="actionPanel">
-            <div>chcę grać!</div>
-            <input type="checkbox" class="checkbox">
+            <label for="checkbox">chcę grać!</label>
+            <input type="checkbox" class="checkbox" id="play" name="checkbox">
         </div>
     </div>
 </body>

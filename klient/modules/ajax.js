@@ -8,7 +8,7 @@ let ajaxFunc = {
             type: 'POST',
             data: sendData,
             dataType: "json",
-
+            responseType: "json",
         })
     },
     comebackToGame: function (sendData) {
@@ -17,7 +17,7 @@ let ajaxFunc = {
             type: 'POST',
             data: sendData,
             dataType: "json",
-        
+            responseType: "json",
 
         })
     },
@@ -28,6 +28,7 @@ let ajaxFunc = {
             type: 'POST',
             data: sendData,
             dataType: "json",
+            responseType: "json",
         })
     }
 
