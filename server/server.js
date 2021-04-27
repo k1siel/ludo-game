@@ -33,6 +33,7 @@ let userSchema = new mongoose.Schema({
   status: Number,
   color: String,
   gameId: String,
+  pawns: Array,
 })
 let User = mongoose.model("User", userSchema)
 
@@ -170,7 +171,7 @@ app.post("/update", async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     if (req.body.status == 4) {
       let filter = { gameId: req.body.gameId, username: req.body.username, time: req.body.time }
-      let update = { status: 2, lastActivity: req.body.lastActivity }
+      let update = { status: 2, lastActivity: req.body.lastActivity, pawns: req.body.pawns }
       await User.findOneAndUpdate(filter, update)
 
 

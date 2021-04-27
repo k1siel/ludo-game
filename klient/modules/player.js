@@ -7,6 +7,7 @@ export default class Player {
         this.status = status
         this.color = "none"
         this.gameId = "none"
+        this.pawns = [0,0,0,0]
     }
 
     get data(){
@@ -20,7 +21,8 @@ export default class Player {
             lastActivity: this.lastActivity,
             status: this.status,
             color: this.color,
-            gameId: this.gameId
+            gameId: this.gameId,
+            pawns: this.pawns
         }
 
         return ob

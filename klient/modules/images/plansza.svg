@@ -141,7 +141,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -159,7 +159,7 @@
      transform="translate(-3.9911674,-11.149907)">
     <g
        id="g1206"
-       transform="matrix(0.5856962,0,0,0.5856962,55.79595,27.767169)"
+       transform="matrix(-0.5856962,0,0,-0.5856962,153.09834,195.4446)"
        style="stroke-width:1.70736">
       <path
          id="rect833"

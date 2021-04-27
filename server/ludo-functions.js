@@ -75,6 +75,7 @@ let ludo = {
     for (let i = 0; i < users.length; i++) {
       if (users[i].color == actualUser.color) {
         users[i].status = 2
+        console.log("status changed",users[i])
       }
     }
     let nextColor = function (actual) {

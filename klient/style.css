@@ -75,7 +75,7 @@ body{
     box-sizing: border-box;
     border: 1px solid black;
     float: left;
-
+    background-size: cover;
 
 }
 #board{

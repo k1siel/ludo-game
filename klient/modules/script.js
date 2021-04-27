@@ -3,7 +3,7 @@ import Player from "./player.js"
 import { ajaxFunc } from "./ajax.js"
 import Board from "./board.js"
 
-let board = new Board("lol")
+let board = new Board()
 let player = "empty"
 window.addEventListener('DOMContentLoaded', (event) => {
 
@@ -87,6 +87,7 @@ let gameUpdate = {
                 document.getElementById("play").disabled = true
                 await ajaxFunc.updateGame(player.data)
                 gameUpdate.interval = setInterval(gameUpdate.updateBoard, 3000)
+                board.putPawns()
             }
         }
     },
@@ -118,11 +119,39 @@ let gameUpdate = {
 
     roll: function () {
         let num = board.rollDice()
-        player.status = 4
+
         document.getElementById("roll").onclick = null
         document.getElementById("roll").style.display = "none"
         ajaxFunc.updateBoard(player.data)
+
+        let move = board.moveExist(num, player.color)
+
+        if (move) {
+
+
+            let bloczki = document.getElementsByClassName("bloczek")
+            console.log("you can move")
+            for (let i = 0; i < bloczki.length; i++) {
+                bloczki[i].addEventListener("click", gameUpdate.movePawn)
+            }
+
+        }
+        else {
+            player.status = 4
+        }
     },
+
+    movePawn() {
+        if (this.style.backgroundImage != "") {
+            let bg = this.style.backgroundImage
+
+            if (bg.includes(player.color)) {
+                console.log("you moved!")
+                player.status = 4
+            }
+        }
+        //if(this.style.backgroundImage )
+    }
 }
 
 
