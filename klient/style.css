@@ -43,6 +43,16 @@ body{
     
 }
 
+#roll{
+    display: none;
+}
+
+#dice{
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+}
+
 #players{
  width: 20%;
  height: 100%;

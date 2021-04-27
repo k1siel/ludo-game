@@ -47,7 +47,7 @@ let start = {
             console.log(player)
 
         }
-
+        gameUpdate.update()
         gameUpdate.interval = setInterval(gameUpdate.update, 3000)
         document.getElementById("play").addEventListener("click", gameUpdate.changeStatus)
     }
@@ -77,6 +77,17 @@ let gameUpdate = {
             else if (userData[i].color == "yellow") {
                 players[i].style.backgroundColor = "#FFFF00"
             }
+
+            if (userData[i].color == player.color) {
+                player.status = userData[i].status
+            }
+
+            if (player.status == 2 || player.status == 3) {
+                clearInterval(gameUpdate.interval)
+                document.getElementById("play").disabled = true
+                await ajaxFunc.updateGame(player.data)
+                gameUpdate.interval = setInterval(gameUpdate.updateBoard, 3000)
+            }
         }
     },
 
@@ -88,7 +99,30 @@ let gameUpdate = {
         else if (player.status == "1") {
             player.status = "0"
         }
-    }
+    },
+
+    updateBoard: async function () {
+        let userData = await ajaxFunc.updateBoard(player.data)
+        console.log("ajax2", userData)
+        for (let i = 0; i < userData.length; i++) {
+            if (userData[i].color == player.color) {
+                player.status = userData[i].status
+            }
+        }
+        if (player.status == 3) {
+
+            document.getElementById("roll").style.display = "inherit"
+            document.getElementById("roll").addEventListener("click", gameUpdate.roll)
+        }
+    },
+
+    roll: function () {
+        let num = board.rollDice()
+        player.status = 4
+        document.getElementById("roll").onclick = null
+        document.getElementById("roll").style.display = "none"
+        ajaxFunc.updateBoard(player.data)
+    },
 }
 
 

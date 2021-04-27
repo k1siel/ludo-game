@@ -147,10 +147,80 @@ app.post("/update", async (req, res) => {
 
   User.find({ gameId: req.body.gameId }, function (err, users) {
     console.log(users)
+    let ready = 0
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].status == 1 || users[i].status == 2 || users[i].status == 3) {
+        ready++
+      }
+    }
+    if (users.length == 4) {
+      users.forEach(element => {
+        if (element.color == "red") {
+          element.status = 3
+        }
+        else {
+          element.status = 2
+        }
+      });
+      lastgame = ""
+    }
+    else if (ready == users.length && users.length >= 2) {
+      users.forEach(element => {
+        if (element.color == "red") {
+          element.status = 3
+        }
+        else {
+          element.status = 2
+        }
+      });
+      lastgame = ""
+    }
     res.end(JSON.stringify(users))
   })
 
+  app.post("/game", async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if (req.body.status == 4) {
+      let filter = { gameId: req.body.gameId, username: req.body.username, time: req.body.time }
+      let update = { status: 2, lastActivity: req.body.lastActivity }
+      await User.findOneAndUpdate(filter, update)
 
+
+      User.find({ gameId: req.body.gameId }, async function (err, users) {
+       
+
+
+
+        let updated = ludo.nextPlayer(users, req.body)
+        filter = { gameId: updated.gameId, username: updated.username, time: updated.time }
+        update = { status: 3, lastActivity: req.body.lastActivity }
+        await User.findOneAndUpdate(filter, update)
+     
+
+        User.find({ gameId: req.body.gameId }, function (err, users) {
+          res.end(JSON.stringify(users))
+          console.log(users)
+        });
+
+
+      });
+    }
+    else {
+     
+      User.find({ gameId: req.body.gameId }, function (err, users) {
+        
+
+
+
+        res.end(JSON.stringify(users))
+
+
+
+      });
+
+
+    }
+  })
 
 
 

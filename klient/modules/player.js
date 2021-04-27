@@ -32,4 +32,5 @@ export default class Player {
 //1 - gotów do gry (min. 2 graczy by rozpocząć, wszyscy obecni gotowi)
 //2 - oczekuję na swój ruch
 //3 - ruch tego gracza (kolejno: czerwony, niebieski, zielony, żółty)
-//4 - afk
+//4 - ruch wykonany
+//5 - afk

@@ -1,6 +1,13 @@
 export default class Board {
     constructor(boardArray) {
         boardArray = this.boardArray
+
+      //  redPlace = [0,0,0,0]
+      //  bluePlace = [0,0,0,0]
+      //  greenPlace = [0,0,0,0]
+      //  yellowPlace = [0,0,0,0]
+
+
     }
 
     createBoard() {
@@ -15,5 +22,13 @@ export default class Board {
                 div.appendChild(block)
             }
         }
+    }
+
+    rollDice() {
+        let num = Math.floor(Math.random() * (7 - 1)) + 1;
+        console.log(num)
+        document.getElementById("dice").style.backgroundImage = 'url("./modules/images/' + num + 'dice.svg")'
+
+        return num
     }
 }
