@@ -154,25 +154,13 @@ app.post("/update", async (req, res) => {
       }
     }
     if (users.length == 4) {
-      users.forEach(element => {
-        if (element.color == "red") {
-          element.status = 3
-        }
-        else {
-          element.status = 2
-        }
-      });
+      let updated = ludo.addFirst(users)
+      users = updated
       lastgame = ""
     }
     else if (ready == users.length && users.length >= 2) {
-      users.forEach(element => {
-        if (element.color == "red") {
-          element.status = 3
-        }
-        else {
-          element.status = 2
-        }
-      });
+      let updated = ludo.addFirst(users)
+      users = updated
       lastgame = ""
     }
     res.end(JSON.stringify(users))
@@ -187,7 +175,7 @@ app.post("/update", async (req, res) => {
 
 
       User.find({ gameId: req.body.gameId }, async function (err, users) {
-       
+
 
 
 
@@ -195,7 +183,7 @@ app.post("/update", async (req, res) => {
         filter = { gameId: updated.gameId, username: updated.username, time: updated.time }
         update = { status: 3, lastActivity: req.body.lastActivity }
         await User.findOneAndUpdate(filter, update)
-     
+
 
         User.find({ gameId: req.body.gameId }, function (err, users) {
           res.end(JSON.stringify(users))
@@ -206,9 +194,9 @@ app.post("/update", async (req, res) => {
       });
     }
     else {
-     
+
       User.find({ gameId: req.body.gameId }, function (err, users) {
-        
+
 
 
 

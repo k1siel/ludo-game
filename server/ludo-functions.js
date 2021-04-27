@@ -23,7 +23,14 @@ let ludo = {
     }
   },
 
-  addFirst: function (users) { 
+  addFirst: function (users) {
+    let firstColor = "red"
+    let userWithColor = ""
+
+    for(let i = 0; i<users.length; i++){
+      users[i].status = 2
+    }
+
     let nextColor = function (actual) {
       let next = ""
       if (actual == "red") {
@@ -42,6 +49,23 @@ let ludo = {
       return next
     }
 
+    let next = firstColor
+
+    while (userWithColor == "") {
+      console.log(next)
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].color == next) {
+          userWithColor = users[i]
+
+          users[i].status = 3
+        }
+      }
+
+      let pom = nextColor(next)
+      next = pom
+    }
+
+    return users
   },
 
 
