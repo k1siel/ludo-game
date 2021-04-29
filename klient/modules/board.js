@@ -183,7 +183,7 @@ export default class Board {
 
         this.greenCoords = [
 
-            [0, 0]
+            [0, 0],
             [11, 5],
             [10, 5],
             [9, 5],

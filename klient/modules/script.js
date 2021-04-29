@@ -127,6 +127,9 @@ let gameUpdate = {
                 document.getElementById("roll").addEventListener("click", gameUpdate.roll)
             }
         }
+        else if (player.status == 8) {
+            document.getElementById("win").innerHTML = "wygranko jest twoje"
+        }
     },
 
     roll: function () {
@@ -145,7 +148,9 @@ let gameUpdate = {
             console.log("you can move")
             for (let i = 0; i < bloczki.length; i++) {
                 bloczki[i].addEventListener("click", gameUpdate.movePawn)
-                console.log()
+                bloczki[i].addEventListener("mouseover", gameUpdate.over)
+                bloczki[i].addEventListener("mouseout", gameUpdate.out)
+
             }
 
 
@@ -171,9 +176,57 @@ let gameUpdate = {
                 this.dataset.index = ""
                 this.dataset.position = ""
                 this.style.backgroundImage = "none"
+                let bloczki = document.getElementsByClassName("bloczek")
+                for (let i = 0; i < bloczki.length; i++) {
+                    bloczki[i].removeEventListener("click", gameUpdate.movePawn)
+                    bloczki[i].removeEventListener("mouseover", gameUpdate.over)
+                    bloczki[i].removeEventListener("mouseout", gameUpdate.out)
+
+                }
+                board.refresh()
             }
         }
 
+    },
+
+    over() {
+        if (typeof (this.dataset.color) != undefined) {
+
+
+            if (this.dataset.color == player.color) {
+                let pawn = new Pawn(this.dataset.color, this.dataset.index, this.dataset.position)
+                if (pawn.position > 0) {
+                    console.log("przeszłoooooo")
+                    let newPos = Number(pawn.position) + num
+                    let X;
+                    let Y;
+                    if (player.color == "red") {
+                        X = board.redCoords[newPos][0]
+                        Y = board.redCoords[newPos][1]
+                    }
+                    else if (player.color == "blue") {
+                        X = board.blueCoords[newPos][0]
+                        Y = board.blueCoords[newPos][1]
+                    }
+                    else if (player.color == "green") {
+                        X = board.greenCoords[newPos][0]
+                        Y = board.greenCoords[newPos][1]
+                    }
+                    else if (player.color == "yellow") {
+                        X = board.yellowCoords[newPos][0]
+                        Y = board.yellowCoords[newPos][1]
+                    }
+
+                    let divek = document.getElementsByClassName("X" + X + " Y" + Y)
+                    divek[0].style.backgroundImage = 'url("./modules/images/hover' + player.color + '.svg")'
+                    console.log(divek)
+                }
+            }
+        }
+    },
+
+    out() {
+        board.refresh()
     }
 }
 

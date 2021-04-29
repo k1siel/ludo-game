@@ -142,6 +142,7 @@ app.post("/update", async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   console.log(req.body)
 
+
   let filter = { gameId: req.body.gameId, username: req.body.username, time: req.body.time }
   let update = { status: req.body.status, lastActivity: req.body.lastActivity }
   await User.findOneAndUpdate(filter, update)
@@ -167,55 +168,72 @@ app.post("/update", async (req, res) => {
     res.end(JSON.stringify(users))
   })
 
-  app.post("/game", async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    if (req.body.status == 4) {
-      let filter = { gameId: req.body.gameId, username: req.body.username, time: req.body.time }
-      let update = { status: 2, lastActivity: req.body.lastActivity, pawns: req.body.pawns }
+})
+
+app.post("/game", async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  let won = 0
+  for (let i = 0; i < 4; i++) {
+    if (req.body.pawns[i] == 43) {
+      won++
+    }
+  }
+
+ 
+  if (req.body.status == 4) {
+    let filter = { gameId: req.body.gameId, username: req.body.username, time: req.body.time }
+    let update = { status: 2, lastActivity: req.body.lastActivity, pawns: req.body.pawns }
+    await User.findOneAndUpdate(filter, update)
+
+
+    User.find({ gameId: req.body.gameId }, async function (err, users) {
+
+
+
+
+      let updated = ludo.nextPlayer(users, req.body)
+      filter = { gameId: updated.gameId, username: updated.username, time: updated.time }
+      update = { status: 3, lastActivity: req.body.lastActivity }
       await User.findOneAndUpdate(filter, update)
 
 
-      User.find({ gameId: req.body.gameId }, async function (err, users) {
-
-
-
-
-        let updated = ludo.nextPlayer(users, req.body)
-        filter = { gameId: updated.gameId, username: updated.username, time: updated.time }
-        update = { status: 3, lastActivity: req.body.lastActivity }
-        await User.findOneAndUpdate(filter, update)
-
-
-        User.find({ gameId: req.body.gameId }, function (err, users) {
-          res.end(JSON.stringify(users))
-          console.log(users)
-        });
-
-
-      });
-    }
-    else {
-
       User.find({ gameId: req.body.gameId }, function (err, users) {
-
-
-
-
         res.end(JSON.stringify(users))
-
-
-
+        console.log(users)
       });
 
 
+    });
+  }
+  else {
+    if (won == 4) {
+      let filter = { gameId: req.body.gameId, username: req.body.username, time: req.body.time }
+      let update = { status: 8, lastActivity: req.body.lastActivity, pawns: req.body.pawns }
+      await User.findOneAndUpdate(filter, update)
     }
-  })
+
+
+    User.find({ gameId: req.body.gameId }, function (err, users) {
 
 
 
 
+      res.end(JSON.stringify(users))
 
+
+
+    });
+
+
+  }
 })
+
+
+
+
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

@@ -27,7 +27,7 @@ let ludo = {
     let firstColor = "red"
     let userWithColor = ""
 
-    for(let i = 0; i<users.length; i++){
+    for (let i = 0; i < users.length; i++) {
       users[i].status = 2
     }
 
@@ -75,7 +75,7 @@ let ludo = {
     for (let i = 0; i < users.length; i++) {
       if (users[i].color == actualUser.color) {
         users[i].status = 2
-        console.log("status changed",users[i])
+        console.log("status changed", users[i])
       }
     }
     let nextColor = function (actual) {
@@ -103,9 +103,11 @@ let ludo = {
       console.log(next)
       for (let i = 0; i < users.length; i++) {
         if (users[i].color == next) {
-          userWithColor = users[i]
+          if (users[i].color != 8 ) {
+            userWithColor = users[i]
 
-          users[i].status = 3
+            users[i].status = 3
+          }
         }
       }
 
