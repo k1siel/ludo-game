@@ -2,13 +2,15 @@
 import Player from "./player.js"
 import { ajaxFunc } from "./ajax.js"
 import Board from "./board.js"
-
+import Pawn from "./pawn.js"
 let board = new Board()
 let player = "empty"
+let num = ""
 window.addEventListener('DOMContentLoaded', (event) => {
 
     start.load()
     board.createBoard()
+    console.log(board.greenPlace)
 });
 
 
@@ -47,9 +49,15 @@ let start = {
             console.log(player)
 
         }
-        gameUpdate.update()
-        gameUpdate.interval = setInterval(gameUpdate.update, 3000)
-        document.getElementById("play").addEventListener("click", gameUpdate.changeStatus)
+        if (player.status == 0 || player.status == 1) {
+            gameUpdate.update()
+            gameUpdate.interval = setInterval(gameUpdate.update, 3000)
+            document.getElementById("play").addEventListener("click", gameUpdate.changeStatus)
+        }
+        else {
+            gameUpdate.interval = setInterval(gameUpdate.updateBoard, 3000)
+            board.putPawns()
+        }
     }
 
 
@@ -105,20 +113,24 @@ let gameUpdate = {
     updateBoard: async function () {
         let userData = await ajaxFunc.updateBoard(player.data)
         console.log("ajax2", userData)
+        board.updatePawns(userData)
+        board.refresh()
         for (let i = 0; i < userData.length; i++) {
+
             if (userData[i].color == player.color) {
                 player.status = userData[i].status
             }
         }
         if (player.status == 3) {
-
-            document.getElementById("roll").style.display = "inherit"
-            document.getElementById("roll").addEventListener("click", gameUpdate.roll)
+            if (num == "") {
+                document.getElementById("roll").style.display = "inherit"
+                document.getElementById("roll").addEventListener("click", gameUpdate.roll)
+            }
         }
     },
 
     roll: function () {
-        let num = board.rollDice()
+        num = board.rollDice()
 
         document.getElementById("roll").onclick = null
         document.getElementById("roll").style.display = "none"
@@ -133,24 +145,35 @@ let gameUpdate = {
             console.log("you can move")
             for (let i = 0; i < bloczki.length; i++) {
                 bloczki[i].addEventListener("click", gameUpdate.movePawn)
+                console.log()
             }
+
 
         }
         else {
             player.status = 4
+            num = ""
         }
     },
 
     movePawn() {
-        if (this.style.backgroundImage != "") {
-            let bg = this.style.backgroundImage
+        console.log(this.dataset.position)
+        if (typeof (this.dataset.color) != undefined) {
+            let pawn = new Pawn(this.dataset.color, this.dataset.index, this.dataset.position)
 
-            if (bg.includes(player.color)) {
+            if (pawn.color == player.color) {
                 console.log("you moved!")
+                board.switchingPositions(pawn, num)
                 player.status = 4
+                player.pawns = board.getPlayerPawns(player.color)
+                num = ""
+                this.dataset.color = ""
+                this.dataset.index = ""
+                this.dataset.position = ""
+                this.style.backgroundImage = "none"
             }
         }
-        //if(this.style.backgroundImage )
+
     }
 }
 
