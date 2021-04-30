@@ -1,11 +1,11 @@
 const express = require('express')
 const app = express()
 const bodyParser = require("body-parser")
-const port = 3000
-const db = require(__dirname + "/database-controler.js")
+const port = process.env.PORT || 3000
+//const db = require(__dirname + "/database-controler.js")
 app.use(bodyParser.urlencoded({ extended: true }));
 const mongoose = require('mongoose');
-const ludo = require(__dirname + "/ludo-functions.js")
+const ludo = require(__dirname + "/server/ludo-functions.js")
 const path = require('path')
 
 const connectionParams = {
@@ -23,7 +23,7 @@ mongoose.connect('mongodb+srv://ludoGame:zaq1@WSX@ludogame.iy4sg.mongodb.net/lud
 
 
 let lastgame = ""
-app.use(express.static(path.join(__dirname, "../klient")))
+app.use(express.static(path.join(__dirname, "/klient")))
 
 
 let userSchema = new mongoose.Schema({
@@ -175,7 +175,7 @@ app.post("/game", async (req, res) => {
 
   let won = 0
   for (let i = 0; i < 4; i++) {
-    if (req.body.pawns[i] == 43) {
+    if (req.body.pawns[i] == 44) {
       won++
     }
   }

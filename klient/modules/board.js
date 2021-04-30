@@ -297,7 +297,7 @@ export default class Board {
 
             if (data[i].color == "red") {
                 for (let j = 0; j < 4; j++) {
-                    this.redPlace[i].position = data[i].pawns[j]
+                    this.redPlace[j].position = data[i].pawns[j]
                 }
             }
             else if (data[i].color == "blue") {
@@ -429,6 +429,7 @@ export default class Board {
 
     switchingPositions(pawn, num) {
         console.log(pawn, num)
+        let coords;
         if (pawn.color == "red") {
             if (this.redPlace[pawn.index - 1].position == 0) {
                 if (num == 1 || num == 6) {
@@ -444,6 +445,7 @@ export default class Board {
                 }
             }
             console.log(this.redPlace)
+            coords = this.redCoords[this.redPlace[pawn.index - 1].position]
         }
         else if (pawn.color == "blue") {
             if (this.bluePlace[pawn.index - 1].position == 0) {
@@ -459,6 +461,7 @@ export default class Board {
                 }
             }
             console.log(this.bluePlace)
+            coords = this.redCoords[this.redPlace[pawn.index - 1].position]
         }
         else if (pawn.color == "green") {
 
@@ -478,6 +481,7 @@ export default class Board {
                 }
             }
             console.log(this.greenPlace)
+            coords = this.redCoords[this.redPlace[pawn.index - 1].position]
         }
         else if (pawn.color == "yellow") {
             if (this.yellowPlace[pawn.index - 1].position == 0) {
@@ -494,8 +498,9 @@ export default class Board {
                 }
             }
             console.log(this.yellowPlace)
+            coords = this.redCoords[this.redPlace[pawn.index - 1].position]
         }
 
-
+        console.log(coords)
     }
 }

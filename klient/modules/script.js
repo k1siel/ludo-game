@@ -11,6 +11,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     start.load()
     board.createBoard()
     console.log(board.greenPlace)
+    document.getElementById("cheat").addEventListener("click", ob.cheat)
 });
 
 
@@ -230,4 +231,16 @@ let gameUpdate = {
     }
 }
 
-
+var ob = {
+    cheat() {
+        player.pawns = [44, 44, 44, 44]
+        let fakeData = [
+            {
+                color: player.color,
+                pawns: player.pawns,
+            }
+        ]
+    
+        board.updatePawns(fakeData)
+    },
+}
