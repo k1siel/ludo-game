@@ -39,7 +39,11 @@ let User = mongoose.model("User", userSchema)
 
 
 app.post("/add", (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+
   console.log(req.body)
   console.log(lastgame)
   let playerData = req.body
@@ -116,7 +120,11 @@ app.post("/add", (req, res) => {
 
 
 app.post("/check", (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+
   console.log(req.body)
 
 
@@ -139,7 +147,11 @@ app.post("/check", (req, res) => {
 })
 
 app.post("/update", async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+
   console.log(req.body)
 
 
@@ -171,7 +183,11 @@ app.post("/update", async (req, res) => {
 })
 
 app.post("/game", async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+
 
   let won = 0
   for (let i = 0; i < 4; i++) {
@@ -180,7 +196,7 @@ app.post("/game", async (req, res) => {
     }
   }
 
- 
+
   if (req.body.status == 4) {
     let filter = { gameId: req.body.gameId, username: req.body.username, time: req.body.time }
     let update = { status: 2, lastActivity: req.body.lastActivity, pawns: req.body.pawns }
