@@ -116,13 +116,27 @@ let gameUpdate = {
         console.log("ajax2", userData)
         board.updatePawns(userData)
         board.refresh()
-        for (let i = 0; i < userData.length; i++) {
+        let time;
 
+        for (let i = 0; i < userData.length; i++) {
+            if (userData[i].status == 3) {
+                time = new Date().getTime()
+                time = time - userData[i].lastActivity
+                time = Math.floor(time / 1000)
+                time = 60 - time
+                if (time < 0) {
+                    time = 0
+                }
+                document.getElementById("time").innerHTML = "Tura gracza: " + userData[i].color + "<br> Czas do wykonania ruchu " + time + "s"
+            }
             if (userData[i].color == player.color) {
                 player.status = userData[i].status
             }
         }
         if (player.status == 3) {
+            if (time < 30) {
+                player.status = 4
+            }
             if (num == "") {
                 document.getElementById("roll").style.display = "inherit"
                 document.getElementById("roll").addEventListener("click", gameUpdate.roll)
@@ -130,6 +144,9 @@ let gameUpdate = {
         }
         else if (player.status == 8) {
             document.getElementById("win").innerHTML = "wygranko jest twoje"
+        }
+        else{
+            document.getElementById("roll").style.display = "none"
         }
     },
 
@@ -169,7 +186,7 @@ let gameUpdate = {
 
             if (pawn.color == player.color) {
                 console.log("you moved!")
-                board.switchingPositions(pawn, num)
+                board.switchingPositions(pawn, num, player)
                 player.status = 4
                 player.pawns = board.getPlayerPawns(player.color)
                 num = ""
@@ -240,7 +257,7 @@ var ob = {
                 pawns: player.pawns,
             }
         ]
-    
+
         board.updatePawns(fakeData)
     },
 }

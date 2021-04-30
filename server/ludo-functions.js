@@ -103,7 +103,7 @@ let ludo = {
       console.log(next)
       for (let i = 0; i < users.length; i++) {
         if (users[i].color == next) {
-          if (users[i].color != 8 ) {
+          if (users[i].status != 8 ) {
             userWithColor = users[i]
 
             users[i].status = 3

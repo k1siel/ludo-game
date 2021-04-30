@@ -206,17 +206,17 @@ app.post("/game", async (req, res) => {
     User.find({ gameId: req.body.gameId }, async function (err, users) {
 
 
-
+      let data = new Date().getTime()
 
       let updated = ludo.nextPlayer(users, req.body)
       filter = { gameId: updated.gameId, username: updated.username, time: updated.time }
-      update = { status: 3, lastActivity: req.body.lastActivity }
+      update = { status: 3, lastActivity: data }
       await User.findOneAndUpdate(filter, update)
 
 
       User.find({ gameId: req.body.gameId }, function (err, users) {
         res.end(JSON.stringify(users))
-        console.log(users)
+        //console.log(users)
       });
 
 
@@ -245,6 +245,33 @@ app.post("/game", async (req, res) => {
   }
 })
 
+app.post("/beat", async (req, res) => {
+
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  res.setHeader("Content-Type", "application/json");
+
+  console.log("beat", req.body)
+  let col = req.body.color
+  let iddd = req.body.gameId
+
+  User.findOne({ gameId: req.body.gameId, color: req.body.color }, async function (err, user) {
+    let array = user.pawns
+
+    array[req.body.index - 1] = 0
+    console.log("user", user)
+
+    let filter = { gameId: iddd, color: col }
+    let update = { pawns: array }
+    await User.findOneAndUpdate(filter, update)
+
+    res.end()
+
+  });
+
+})
 
 
 

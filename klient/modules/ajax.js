@@ -4,7 +4,7 @@ export { ajaxFunc }
 let ajaxFunc = {
     addToGame: function (sendData) {
         return $.ajax({
-            url: 'http://localhost:3000/add',
+            url: '/add/',
             type: 'POST',
             data: sendData,
             dataType: "json",
@@ -13,7 +13,7 @@ let ajaxFunc = {
     },
     comebackToGame: function (sendData) {
         return $.ajax({
-            url: 'http://localhost:3000/check',
+            url: '/check/',
             type: 'POST',
             data: sendData,
             dataType: "json",
@@ -24,7 +24,7 @@ let ajaxFunc = {
 
     updateGame: function (sendData) {
         return $.ajax({
-            url: 'http://localhost:3000/update',
+            url: '/update/',
             type: 'POST',
             data: sendData,
             dataType: "json",
@@ -34,7 +34,7 @@ let ajaxFunc = {
 
     check: function (sendData) {
         return $.ajax({
-            url: 'http://localhost:3000/check',
+            url: '/check/',
             type: 'POST',
             data: sendData,
             dataType: "json",
@@ -48,7 +48,20 @@ let ajaxFunc = {
 
     updateBoard: function (sendData) {
         return $.ajax({
-            url: 'http://localhost:3000/game',
+            url: '/game/',
+            type: 'POST',
+            data: sendData,
+            dataType: "json",
+            responseType: "json",
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest, textStatus, errorThrown)
+            },
+        })
+    },
+
+    beat: function (sendData) {
+        return $.ajax({
+            url: '/beat/',
             type: 'POST',
             data: sendData,
             dataType: "json",

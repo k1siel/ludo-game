@@ -1,5 +1,5 @@
 import Pawn from "./pawn.js"
-
+import { ajaxFunc } from "./ajax.js"
 export default class Board {
     constructor() {
 
@@ -427,7 +427,7 @@ export default class Board {
         return move
     }
 
-    switchingPositions(pawn, num) {
+    switchingPositions(pawn, num, player) {
         console.log(pawn, num)
         let coords;
         if (pawn.color == "red") {
@@ -461,7 +461,7 @@ export default class Board {
                 }
             }
             console.log(this.bluePlace)
-            coords = this.redCoords[this.redPlace[pawn.index - 1].position]
+            coords = this.blueCoords[this.bluePlace[pawn.index - 1].position]
         }
         else if (pawn.color == "green") {
 
@@ -481,7 +481,7 @@ export default class Board {
                 }
             }
             console.log(this.greenPlace)
-            coords = this.redCoords[this.redPlace[pawn.index - 1].position]
+            coords = this.greenCoords[this.greenPlace[pawn.index - 1].position]
         }
         else if (pawn.color == "yellow") {
             if (this.yellowPlace[pawn.index - 1].position == 0) {
@@ -498,9 +498,21 @@ export default class Board {
                 }
             }
             console.log(this.yellowPlace)
-            coords = this.redCoords[this.redPlace[pawn.index - 1].position]
+            coords = this.yellowCoords[this.yellowPlace[pawn.index - 1].position]
         }
 
         console.log(coords)
+        let bloczek = document.getElementsByClassName("X" + coords[0] + " Y" + coords[1])
+
+        if (bloczek[0].dataset.color != player.color && bloczek[0].dataset.color != "") {
+            let ob = {
+                index: bloczek[0].dataset.index,
+                color: bloczek[0].dataset.color,
+                gameId: player.gameId,
+            }
+
+            ajaxFunc.beat(ob)
+            console.log("bicie", ob)
+        }
     }
 }
