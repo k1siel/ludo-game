@@ -12,7 +12,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     board.createBoard()
     console.log(board.greenPlace)
     // document.getElementById("cheat").addEventListener("click", ob.cheat)
+
 });
+
+
 
 
 let synth = window.speechSynthesis;
@@ -204,12 +207,12 @@ let gameUpdate = {
 
         let move = board.moveExist(num, player.color)
 
-        function read(){
-            var u=new SpeechSynthesisUtterance();
-            u.text=num;
-            u.voice=voices[100];
-            u.pitch=1;
-            u.rate=1;
+        function read() {
+            var u = new SpeechSynthesisUtterance();
+            u.text = num;
+            u.voice = voices[100];
+            u.pitch = 1;
+            u.rate = 1;
             synth.speak(u);
         }
 
@@ -316,4 +319,6 @@ var ob = {
 
         board.updatePawns(fakeData)
     },
+
 }
+
