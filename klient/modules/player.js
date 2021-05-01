@@ -35,5 +35,4 @@ export default class Player {
 //2 - oczekuję na swój ruch
 //3 - ruch tego gracza (kolejno: czerwony, niebieski, zielony, żółty)
 //4 - ruch wykonany
-//5 - afk
 //8 - win

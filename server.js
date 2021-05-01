@@ -11,7 +11,8 @@ const path = require('path')
 const connectionParams = {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false,
 }
 mongoose.connect('mongodb+srv://ludoGame:zaq1@WSX@ludogame.iy4sg.mongodb.net/ludoGame?retryWrites=true&w=majority', connectionParams)
   .then(() => {
@@ -216,7 +217,7 @@ app.post("/game", async (req, res) => {
 
       User.find({ gameId: req.body.gameId }, function (err, users) {
         res.end(JSON.stringify(users))
-        //console.log(users)
+ 
       });
 
 

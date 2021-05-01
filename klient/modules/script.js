@@ -11,8 +11,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
     start.load()
     board.createBoard()
     console.log(board.greenPlace)
-    document.getElementById("cheat").addEventListener("click", ob.cheat)
+    // document.getElementById("cheat").addEventListener("click", ob.cheat)
 });
+
+
+let synth = window.speechSynthesis;
+let voices = [];
+function populateVoiceList() {
+    voices = synth.getVoices();
+    console.log(voices);
+}
+
+populateVoiceList();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+
+
 
 
 
@@ -20,7 +35,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 let start = {
     load: async function () {
         console.log()
-        if (sessionStorage.getItem("gameId") != null) {
+        if (sessionStorage.getItem("gameId")) {
             console.log(sessionStorage)
             let ob = {
                 username: sessionStorage.getItem("username"),
@@ -29,7 +44,7 @@ let start = {
             let user = await ajaxFunc.comebackToGame(ob)
             console.log(user)
             console.log(user.username, user.color)
-            player = new Player(user.username, "0", new Date().getTime())
+            player = new Player(user.username, user.status, user.time)
             player.color = user.color
             player.gameId = user.gameId
             console.log(player)
@@ -58,6 +73,32 @@ let start = {
         else {
             gameUpdate.interval = setInterval(gameUpdate.updateBoard, 3000)
             board.putPawns()
+
+
+            let userData = await ajaxFunc.updateGame(player.data)
+
+            let players = document.getElementById("players").children
+
+
+            for (let i = 0; i < userData.length; i++) {
+                players[i].innerText = userData[i].username
+                if (userData[i].color == "red") {
+                    players[i].style.backgroundColor = "#c52f00"
+                }
+                else if (userData[i].color == "blue") {
+                    players[i].style.backgroundColor = "#639cff"
+                }
+                else if (userData[i].color == "green") {
+                    players[i].style.backgroundColor = "#328015"
+                }
+                else if (userData[i].color == "yellow") {
+                    players[i].style.backgroundColor = "#FFFF00"
+                }
+
+                if (userData[i].color == player.color) {
+                    player.status = userData[i].status
+                }
+            }
         }
     }
 
@@ -89,6 +130,10 @@ let gameUpdate = {
 
             if (userData[i].color == player.color) {
                 player.status = userData[i].status
+            }
+
+            if (document.getElementById("play").checked == true) {
+                if (player.status == 0) { player.status = 1 }
             }
 
             if (player.status == 2 || player.status == 3) {
@@ -145,7 +190,7 @@ let gameUpdate = {
         else if (player.status == 8) {
             document.getElementById("win").innerHTML = "wygranko jest twoje"
         }
-        else{
+        else {
             document.getElementById("roll").style.display = "none"
         }
     },
@@ -158,6 +203,17 @@ let gameUpdate = {
         ajaxFunc.updateBoard(player.data)
 
         let move = board.moveExist(num, player.color)
+
+        function read(){
+            var u=new SpeechSynthesisUtterance();
+            u.text=num;
+            u.voice=voices[100];
+            u.pitch=1;
+            u.rate=1;
+            synth.speak(u);
+        }
+
+        read(num)
 
         if (move) {
 

@@ -45,12 +45,15 @@ body{
 
 #roll{
     display: none;
+    width: 100%;
 }
 
 #dice{
     width: 100px;
     height: 100px;
     background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #players{
@@ -88,7 +91,9 @@ body{
 #actionPanel{
     height: 100%;
     padding: 15px;
-
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .checkbox {
