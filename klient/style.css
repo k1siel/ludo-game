@@ -54,7 +54,8 @@ body{
     background-size: cover;
     margin-left: auto;
     margin-right: auto;
-    margin: 5px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 #players{

@@ -182,7 +182,7 @@ let gameUpdate = {
             }
         }
         if (player.status == 3) {
-            if (time < 30) {
+            if (time < 1) {
                 player.status = 4
             }
             if (num == "") {
